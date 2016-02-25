@@ -12,25 +12,15 @@ Using computer craft mod is sweet as you can have computers in minecraft. But do
  * npm run
 
 3. computer inside minecraft:
- *
-
+ * [market link](http://turtlescripts.com/project/gjdi1k-mcterm)
  * get market: 
-```
-pastebin get w1RtfqFd market
-```
-
  * get update: 
-```
-market get gjdiao update y
-```
-
  * run update: 
 ```
+pastebin get w1RtfqFd market
+market get gjdiao update y
 update
 ```
- 
- * [market link](http://turtlescripts.com/project/gjdi1k-mcterm)
-
 ## Usage
 ### instructions incoming
 
