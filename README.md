@@ -27,10 +27,10 @@ Using computer craft mod is sweet as you can have computers in minecraft. But do
 5. Submit a pull request :D
 
 ## History
-# 0.0.1  git init
+ * 0.0.1  git init
 
 ## Credits
-# Thanks to Node.js for awesome modules.
+ * Thanks to Node.js for awesome modules.
 
 ## License
-# [Apache License](http://www.apache.org/licenses/LICENSE-2.0)
+ * [Apache License](http://www.apache.org/licenses/LICENSE-2.0)
