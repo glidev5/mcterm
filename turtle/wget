@@ -6,6 +6,6 @@ end
 local args = { ... }
 local url = args[1]
 local resp=curl(url)
-if (not (resp==nil or resp=='')) then
-  print(resp)
-end
+ak = io.open("/wget.out","w")
+ak:write(resp)
+ak:close()
