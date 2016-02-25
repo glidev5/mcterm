@@ -1,0 +1,1 @@
+shell.run('m "curl http://localhost:3000/cmd?cmd=date"')

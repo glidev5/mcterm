@@ -1,0 +1,5 @@
+local args={...}
+while true do
+  shell.run(args[1])
+  sleep(0.6)
+end
