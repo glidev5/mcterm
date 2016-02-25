@@ -1,5 +1,0 @@
-local m = peripheral.wrap( "left" )
-m.setTextColor(colors.green)
-m.setBackgroundColor(colors.black)
-m.setTextScale(0.5)
-m.clear()

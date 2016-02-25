@@ -1,1 +1,0 @@
-shell.run('screen "top%20-n%201"')
