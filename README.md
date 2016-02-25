@@ -11,7 +11,7 @@ Using computer craft mod is sweet as you can have computers in minecraft. But do
 2. node server:
  * git clone https://github.com/glidev5/mcterm.git
  * npm install
- * npm run
+ * npm start
  * make sure nodejs server is not run as root
 
 3. computer inside minecraft:

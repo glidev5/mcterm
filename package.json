@@ -3,8 +3,9 @@
  "version":"0.0.1",
  "description":"xterm/putty for minecraft",
  "keywords":["minecraft","computercraft","terminal","ssh","putty"],
- "repository":"",
- "homepage":"",
+ "repository":"https://github.com/glidev5/mcterm.git",
+ "homepage":"https://github.com/glidev5/mcterm",
+ "license":"Apache License",
  "author":"Grant Li <glidev5@gmail.com>",
  "main":"web.js",
  "engines":{
@@ -19,6 +20,6 @@
   "strip-ansi":""
  },
  "scripts":{
-  "run":"node web.js"
+  "start":"node web.js"
  }
 }
