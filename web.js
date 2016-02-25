@@ -108,15 +108,3 @@ app.listen(3000, function () {
   console.log('mcterm server listening on port 3000!');
 });
 
-
-var ssh = new SSH({
-    host: 'localhost',
-    user: 'username',
-    pass: 'password'
-});
- 
-ssh.exec('echo $PATH', {
-    out: function(stdout) {
-        console.log(stdout);
-    }
-}).start();
