@@ -12,14 +12,17 @@ Using computer craft mod is sweet as you can have computers in minecraft. But do
  * npm run
 
 3. computer inside minecraft:
+
  * get market: 
 ```
 pastebin get w1RtfqFd market
 ```
+
  * get update: 
 ```
 market get gjdiao update y
 ```
+
  * run update: 
 ```
 update
