@@ -1,0 +1,11 @@
+function curl(url)
+  local req = http.get(url)
+  return req.readAll()
+end
+
+local args = { ... }
+local url = args[1]
+local resp=curl(url)
+if (not (resp==nil or resp=='')) then
+  print(resp)
+end
