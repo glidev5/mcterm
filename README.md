@@ -12,6 +12,7 @@ Using computer craft mod is sweet as you can have computers in minecraft. But do
  * npm run
 
 3. computer inside minecraft:
+ *
 
  * get market: 
 ```
@@ -27,6 +28,8 @@ market get gjdiao update y
 ```
 update
 ```
+ 
+ * [market link](http://turtlescripts.com/project/gjdi1k-mcterm)
 
 ## Usage
 ### instructions incoming
