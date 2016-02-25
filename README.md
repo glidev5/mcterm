@@ -3,18 +3,18 @@ Using computer craft mod is sweet as you can have computers in minecraft. But do
 
 ## Installation
 1. minecraft server:
-* install computer craft in both server and client
-* ensure http is enabled for server
+ * install computer craft in both server and client
+ * ensure http is enabled for server
 
 2. node server:
-* git clone https://github.com/glidev5/mcterm.git
-* npm install
-* npm run
+ * git clone https://github.com/glidev5/mcterm.git
+ * npm install
+ * npm run
 
 3. computer inside minecraft:
-* get market:
-*   pastebin get w1RtfqFd market
-* market link available later
+ * get market:
+ *   pastebin get w1RtfqFd market
+ * market link available later
 
 ## Usage
 ### instructions incoming
