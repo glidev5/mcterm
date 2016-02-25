@@ -2,19 +2,19 @@
 Using computer craft mod is sweet as you can have computers in minecraft. But don't you want to have a ssh connection between computers inside minecraft and real world computers? Wait no more, mcterm is such a server that allows you to communicate between minecraft computer and real world computer through ssh connection.
 
 ## Installation
-*. minecraft server:
-### install computer craft in both server and client
-### ensure http is enabled for server
+1. minecraft server:
+* install computer craft in both server and client
+* ensure http is enabled for server
 
-*. node server:
-### git clone https://github.com/glidev5/mcterm.git
-### npm install
-### npm run
+2. node server:
+* git clone https://github.com/glidev5/mcterm.git
+* npm install
+* npm run
 
-*. computer inside minecraft:
-### get market:
-###   pastebin get w1RtfqFd market
-### market link available later
+3. computer inside minecraft:
+* get market:
+*   pastebin get w1RtfqFd market
+* market link available later
 
 ## Usage
 ### instructions incoming
