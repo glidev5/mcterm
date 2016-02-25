@@ -13,9 +13,9 @@ Using computer craft mod is sweet as you can have computers in minecraft. But do
 
 3. computer inside minecraft:
  * [market link](http://turtlescripts.com/project/gjdi1k-mcterm)
- * get market: 
- * get update: 
- * run update: 
+ * get market
+ * get update
+ * run update
 ```
 pastebin get w1RtfqFd market
 market get gjdiao update y
