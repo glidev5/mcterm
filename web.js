@@ -7,6 +7,7 @@ var htmlToText = require('html-to-text');
 var Tail = require('tail').Tail;
 var stripAnsi = require('strip-ansi');
 
+try{
 var tailed="";
 var tail = new Tail("/root/screenlog.0");
 tail.on("line", function(data) {
@@ -16,6 +17,7 @@ tail.on("line", function(data) {
 tail.on("error", function(error) {
   console.log('ERROR: ', error);
 });
+}catch(e){}
 
 var html_option={
   compressed         : true,
@@ -59,10 +61,13 @@ app.get('/wiki',function(req,res){
  });
 });
 
-var key=fs.readFileSync('/root/.ssh/id_rsa').toString();
+try{
+  var key=fs.readFileSync('/home/user/.ssh/id_rsa').toString();
+}catch(e){}
+
 var ssh_option={
     host: 'localhost',
-    user: 'root',
+    user: 'user',
     pass: '',
     key: key,
     agent: process.env.SSH_AUTH_SOCK,
