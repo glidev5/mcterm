@@ -13,11 +13,11 @@ Using computer craft mod is sweet as you can have computers in minecraft. But do
 
 3. computer inside minecraft:
  * get market:
-  * pastebin get w1RtfqFd market
+ ** pastebin get w1RtfqFd market
  * get update:
-  * market get gjdiao update y
+ ** market get gjdiao update y
  * run update:
-  * update
+ ** update
 
 ## Usage
 ### instructions incoming
