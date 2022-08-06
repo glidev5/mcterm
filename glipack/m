@@ -1,0 +1,2 @@
+local args = { ... }
+shell.run("monitor left "..args[1])

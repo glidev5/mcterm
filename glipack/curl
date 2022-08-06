@@ -1,0 +1,8 @@
+function curl(url)
+  local req = http.get(url)
+  return req.readAll()
+end
+
+local args = { ... }
+local url = args[1]
+print(curl(url))
