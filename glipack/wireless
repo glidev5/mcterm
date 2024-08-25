@@ -1,0 +1,73 @@
+-- get args
+local args = { ... }
+
+-- validate args
+if #args < 1 or #args > 2 or args[1] == "usage" then
+  print( "Usage: wireless <port> [label]" )
+  return
+end
+
+local label = args[2] or os.getComputerLabel()
+local done
+
+rednet.open( args[1] )
+rednet.host( "wireless", label )
+
+-- modify the functions in the term library
+-- to allow messages to be collected
+local messages = {}
+local termLocal
+for k,v in pairs(term) do
+  -- "term.redirect()" causes issues
+  -- plus add support to print text without wirelessly sending it
+  if type(v) == "function" and k ~= "redirect" then
+    term[k] = function(...)
+      if not termLocal then
+        table.insert( messages, {
+          type = k,
+          args = { ... }
+        } )
+      end
+      return v( ... )
+    end
+  end
+end
+
+-- function to receive commands
+function receive()
+  local sender, data = rednet.receive( "remote" )
+  if data and data.name == label then
+    termLocal = true
+    print( 'Running "' .. data.args[1] .. '"' )
+    termLocal = nil
+    shell.run( unpack( data.args ) )
+    rednet.send( sender, messages, "remoteResult" )
+    messages = {}
+  end
+  os.sleep( 1 )
+end
+
+-- function to check for pressing "end"
+function shutdown()
+  while true do
+    local _, key = os.pullEvent( "key" )
+    if key == keys["end"] then
+      done = true
+      break
+    end
+  end
+end
+
+print( "Wireless mode activated" )
+print( 'Press "End" to exit' )
+
+messages = {}
+
+-- main loop
+while not done do
+  parallel.waitForAny( receive, shutdown )
+end
+
+-- shutdown process
+rednet.unhost( "wireless", label )
+rednet.close( args[1] )

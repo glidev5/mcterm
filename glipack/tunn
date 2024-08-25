@@ -1,0 +1,197 @@
+--created by Justinjah91
+--I just copied his file from dropbox and pasted it here, source: http://www.computercraft.info/forums2/index.php?/topic/22526-safetunnel-a-tunneling-program-that-protects-you/
+
+local args = { ... }
+
+if #args ~= 1 then
+	print( "Usage: tunn <length>" )
+	print( "slot 1: what not to mine" )
+	print( "slot 2: replacing block" )
+	print( "slot 16: torch" )
+	return
+end
+
+function clc()
+	term.clear()
+	term.setCursorPos(1,1)
+end
+
+function tup()
+	while turtle.up() == false  do
+		turtle.digUp()
+		turtle.attackUp()
+	end
+end
+
+function tdn()
+	while turtle.down() == false do
+		turtle.digDown()
+		turtle.attackDown()
+	end
+end
+
+function trt()
+	turtle.turnRight()
+	while turtle.forward() == false do
+		turtle.dig()
+		turtle.attack()
+	end
+end
+
+function tlt()
+	turtle.turnLeft()
+	while turtle.forward() == false do
+		turtle.dig()
+		turtle.attack()
+	end
+end
+
+function tfd()
+	while turtle.forward() == false do
+		turtle.dig()
+		turtle.attack()
+	end
+end
+
+function tbk()
+	if turtle.back() == false then
+		turtle.turnRight(2)
+		while turtle.forward() == false do
+			turtle.dig()
+			turtle.attack()
+		end
+		turtle.turnRight()
+		turtle.turnRight()
+	else
+	end
+end
+
+function cup()
+	turtle.select(1)
+	if turtle.compareUp() == false then
+		turtle.select(2)
+		while turtle.placeUp() == false do
+			turtle.digUp()
+			turtle.attackUp()
+		end
+	else
+	end
+end
+
+function cfd()
+	turtle.select(1)
+	if turtle.compare() == false then
+		turtle.select(2)
+		while turtle.place() == false do
+			turtle.dig()
+			turtle.attack()
+		end
+	else
+	end
+end
+
+function cdn()
+	turtle.select(1)
+	if turtle.compareDown() == false then
+		turtle.select(2)
+		while turtle.placeDown() == false do
+			turtle.digDown()
+			turtle.attackDown()
+		end
+	else
+	end
+end	
+
+
+clc()
+-- write('How far forward? ')
+x = tonumber(args[1])
+j = 0
+clc()
+print('Mining in progress...')
+print()
+print()
+print('<                         >')
+term.setCursorPos(13,5)
+print('0%')
+
+for i=1,x-1 do
+	if j%11 == 0 then
+		turtle.turnRight()
+		turtle.turnRight()
+		turtle.select(16)
+		turtle.place()
+		turtle.select(1)
+		turtle.turnRight()
+		turtle.turnRight()
+	elseif (j-5)%11 == 0 then
+		turtle.turnRight()
+		turtle.turnRight()
+		turtle.select(16)
+		turtle.place()
+		turtle.select(1)
+		turtle.turnRight()
+		turtle.turnRight()
+	end
+	j = j+1
+	tfd()
+	cdn()
+	cfd()
+	tup()
+	cfd()
+	tup()
+	cfd()
+	cup()
+	tlt()
+	cfd()
+	cup()
+	turtle.turnRight()
+	cfd()
+	tdn()
+	cfd()
+	turtle.turnLeft()
+	cfd()
+	tdn()
+	cfd()
+	cdn()
+	turtle.turnRight()
+	cfd()
+	turtle.turnRight()
+	tfd()
+	tfd()
+	cfd()
+	cdn()
+	turtle.turnLeft()
+	cfd()
+	tup()
+	cfd()
+	turtle.turnRight()
+	cfd()
+	tup()
+	cfd()
+	cup()
+	turtle.turnLeft()
+	cfd()
+	turtle.turnLeft()
+	tfd()
+	turtle.turnRight()
+	tdn()
+	tdn()
+	
+	p = (i/x-(i/x)%0.0001)*100
+	term.setCursorPos(13,5)
+	n = tostring(p)
+	term.clearLine()
+	print(n .. '%')
+	term.setCursorPos(2,4)
+	while p>4 do
+		p = p-4
+		write('=')
+	end
+end
+
+term.setCursorPos(13,5)
+term.clearLine()
+print('100%')
+print()
+print('Mining complete.')

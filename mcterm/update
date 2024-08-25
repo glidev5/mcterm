@@ -1,0 +1,37 @@
+print("")
+print("==[mcterm ALPHA v0.0.1]==")
+print("")
+    
+shell.run("/market get gjdiad /mcterm/bg y")
+shell.run("/market get gjdiac /mcterm/ct y")
+shell.run("/market get gjdiae /mcterm/ctx y")
+shell.run("/market get gjdiaf /mcterm/curl y")
+shell.run("/market get gjdiag /mcterm/m y")
+shell.run("/market get gjdial /mcterm/screen y")
+shell.run("/market get gjdiam /mcterm/top y")
+shell.run("/market get gjdiao /mcterm/update y")
+shell.run("/market get gjdiah /mcterm/startup y")
+shell.run("/market get gjdiai /mcterm/tail y")
+shell.run("/market get gjdiaj /mcterm/watch y")
+shell.run("/market get gjdian /mcterm/wget y")
+shell.run("/market get gjdiak /mcterm/wireless y")
+
+if not fs.exists("/taco") then
+    print("")
+    print("Install TACO Text Editor? [Y/N]")
+    print("")
+    local checking = true
+    while checking do
+        local event, char = os.pullEvent()
+        if event=="key" and char == keys.y then
+            shell.run("/market get gjdh1m /taco y")
+            checking = false
+        elseif event=="key" and char == keys.n then
+            checking = false
+        end
+    end
+else
+    shell.run("/market get gjdh1m /taco y")
+end
+sleep(0.5)
+print("mcterm updated :)")

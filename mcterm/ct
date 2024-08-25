@@ -1,0 +1,183 @@
+-- define arguments
+local startArgs = { ... }
+
+-- validate argument or print usage
+if #startArgs < 1 or #startArgs > 2 or startArgs[1] == "usage" then
+  print( "Usage: control <receiver> [port]" )
+  return
+end
+
+-- any programs that cannot be run wirelessly
+local blacklist = {
+
+  -- core programs
+  startup = true,
+  edit = true,
+  lua = true,
+  
+  -- custom programs
+  control = true,
+  wireless = true
+}
+
+-- localize some variables for efficency
+local string = string
+local find = string.find
+local table = table
+local rednet = rednet
+
+local port = startArgs[2] or "back"
+rednet.open( port )
+
+local name, done, timeout
+
+function validateName( newName, exit )
+  while true do
+    local lookup = { rednet.lookup( "wireless", newName ) }
+    if lookup[1] then
+      name = newName
+      break
+    else
+      print( "Invalid name. Please try a different name" )
+      local input = read()
+      if input == "abort" then
+        if exit then
+          done = true
+        end
+        break
+      else
+        newName = input
+      end
+    end
+  end
+end
+
+validateName( startArgs[1], true )
+local history = {}
+
+-- function to process user input
+-- basically separates args
+-- while allowing DOS style spaces
+function processArgs()
+  local cmd = read( nil, history )
+  table.insert( history, cmd )
+  local quote = {}
+  local args = {}
+  
+  for match in string.gmatch( cmd, '%S+' ) do
+    if quote[1] then
+      table.insert( quote, match )
+      if find( match, '"$' ) then
+        table.insert( args, table.concat( quote, " " ) )
+        quote = {}
+        table.insert( args, rep )
+      end
+    elseif find( match, '^"' ) then
+      if find( match, '"$' ) then
+        local rep = string.gsub(
+          match, '^"(.+)"$', "%1"
+        )
+        table.insert( args, rep )
+      else
+        table.insert( quote, match )
+      end
+    else
+      table.insert( args, match )
+    end
+  end
+  
+  return args
+end
+
+function receive()
+  if timeout ~= 0 then
+    local _, messages = rednet.receive( "remoteResult", timeout )
+    for _, v in pairs( messages ) do
+      if v.type == "setCursorPos" then
+        local x,y = term.getCursorPos()
+        if v.args[2] ~= 1 then
+          term.setCursorPos( v.args[1], y )
+        else
+          term.setCursorPos( v.args[1], 1 )
+        end
+      elseif term[v.type] then
+        term[v.type]( unpack( v.args ) )
+      end
+    end
+  end
+end
+
+function cancel()
+  while true do
+    local _, key = os.pullEvent( "key" )
+    if key == keys["end"] then
+      break
+    end
+  end
+end
+
+-- print startup text
+local colored = term.isColor()
+local setColor = term.setTextColor
+if colored then
+  setColor( colors.yellow )
+end
+print( "* Type the name of a program to run" )
+print( '* Run "ctrlPrograms" to list additional programs available to control' )
+print( '* Press end while waiting for a message to cancel it' )
+setColor( colors.white )
+
+-- main loop
+while not done do
+  write( "\n" .. name .. "] " )
+  local args = processArgs()
+
+  if args[1] == "exit" then
+    done = true
+    print( "Exiting control" )
+  elseif args[1] == "switchTo" then
+    local oldName = name
+    validateName( args[2] )
+    if name == oldName then
+      print( "Name did not change" )
+    else
+      print( "Now brodcasting to " .. name )
+    end
+  elseif args[1] == "setTimeout" then
+    if args[2] == "false" then
+      timeout = nil
+    else
+      timeout = tonumber( args[2] )
+    end
+  elseif args[1] == "ctrlClear" then
+    term.clear()
+    term.setCursorPos( 1, 1 )
+  elseif args[1] == "ctrlPrograms" then
+    if colored then
+      setColor( colors.yellow )
+    end
+    print( '* ctrlClear: clears the screen' )
+    print( '* ctrlPrograms: lists additional programs available to control' )
+    print( '* exit: exits control' )
+    print( '* setTimeout: changes timeout settings' )
+    print( '* switchTo: changes device name' )
+    setColor( colors.white )
+  elseif blacklist[args[1]] then
+    print( args[1] .. ' cannot be run wirelessly' )
+  elseif args[1] then
+    rednet.broadcast( {
+      name = name,
+      args = args
+    }, "remote" )
+    print( table.concat( {
+      'Told ',
+      name,
+      ' to run "',
+      args[1],
+      '"'
+    } ) )
+    parallel.waitForAny( receive, cancel )
+  end
+end
+
+rednet.close( port )
