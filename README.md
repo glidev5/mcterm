@@ -27,10 +27,13 @@ pastebin get w1RtfqFd market
 market get gjdiao update y
 update
 ```
-pastebin get EmKWkD17 curl
-```
+## pastebin get EmKWkD17 curl
+### To get started, use curl to get information from node server
+### It is assuming your server is ran on ubvm as domain
+### Server by default use port 3000
 
 ## Usage
+### type these command in minecraft computer with curl downloaded
 ### 1. curl http://www.google.com/
 ### 2. curl http://ubvm:3000/wiki?query=minecraft
 ### 3. curl http://ubvm:3000/cmd?cmd=whoami
