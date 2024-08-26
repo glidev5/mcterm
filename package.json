@@ -1,0 +1,37 @@
+{
+ "name": "mcterm",
+ "version": "2.1.1",
+ "description": "xterm/putty for minecraft",
+ "keywords": [
+  "minecraft",
+  "computercraft",
+  "terminal",
+  "ssh",
+  "putty"
+ ],
+ "repository": "https://github.com/glidev5/mcterm.git",
+ "homepage": "https://github.com/glidev5/mcterm",
+ "license": "Apache-2.0",
+ "author": "Grant Li <glidev5@gmail.com>",
+ "main": "web.js",
+ "exports": "./web.js",
+ "type": "module",
+ "engines": {
+  "node": "22.7.0"
+ },
+ "dependencies": {
+  "axios": "^1.7.5",
+  "cheerio": "^1.0.0",
+  "debug": "",
+  "express": "^4.19.2",
+  "html-to-text": "",
+  "needle": "",
+  "simple-ssh": "",
+  "strip-ansi": "",
+  "tail": ""
+ },
+ "scripts": {
+  "start": "node web.js",
+  "install": "npm install --no-bin-links && npm audit fix --force --no-bin-links && npm audit fix --force --no-bin-links"
+ }
+}
