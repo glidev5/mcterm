@@ -1,0 +1,69 @@
+--[[
+======================= A KreezCo Production =============================
+==  Written by: Kreezxil                                                ==
+==  Orignal Code by: M_I_Z_E                                            ==
+==  Many Parts of this code was barrowed from the original turtle       ==
+==    programs that come with computer craft.                           ==
+==    http://www.computercraft.info/                                    ==
+==  YouTube channel Name: Adventures in Casual Gaming                   ==
+==  URL: http://www.youtube.com/user/kreezxil                           ==
+==  Original URL: http://www.youtube.com/user/MIZ3craft                 ==
+==  Please link to my channel and give proper credit if using my code.  ==
+==  Thanks for watching!                                                ==
+==  Created 6/25/2014                                                   ==
+==========================================================================
+--]]
+
+--[[ Begin Library 
+     Libary by Kreezxil 7/29/2013
+--]]
+
+
+function dump(direction, slot)
+    if slot == "all" then 
+        for i=1,16 do
+            turtle.select(i)
+            turtle.drop()
+        end
+        return
+    end
+    
+    turtle.select(slot)    
+    if direction == "f" then
+        turtle.drop() 
+    elseif direction == "u" then
+        turtle.dropUp() 
+    elseif direction == "d" then
+        turtle.dropDown() 
+    end
+end
+
+--[[ End Library --]]
+
+local tArgs = { ... }
+--[[ test how many args were passed, if none set dist to 0 and assume
+forward facing. --]]
+if #tArgs < 2 then
+    --[[ print usage --]]
+    print("Usage: dump <dir> <slot>")
+    print()
+    return
+end
+
+if string.find("fdu",tArgs[1]) ~= nil then
+    direction = tArgs[1]
+else
+    print("Error: Direction must be one of up, down, forward")
+    return
+end
+
+slot = tArgs[2]
+if slot ~= "all" then
+    slot = tonumber(slot)
+    if slot<1 or slot>16 then
+        print("Error: Slot must be in the range 1 to 16 or 'all'")
+        return
+    end
+end
+
+dump(direction,slot)

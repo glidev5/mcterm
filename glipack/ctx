@@ -1,0 +1,4 @@
+print("Turtle ID:")
+local ip=read()
+local port="back"
+shell.run("ct "..ip.." "..port)

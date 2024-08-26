@@ -1,0 +1,604 @@
+-- XDig v1.2.0 created by Sir.Mongoose
+
+
+local mode = 1
+torchP = 0
+chestR = 0
+chestMode = 0
+backT = 0
+bTrack = 0
+fFuel = turtle.getFuelLevel()
+ 
+function detectUp()
+while turtle.detectUp() == true do
+  turtle.digUp()
+  os.sleep(0.4)
+ 
+  blocks = blocks + 1
+  end
+end
+ 
+function detect()
+while turtle.detect() == true do
+  turtle.dig()
+  os.sleep(0.4)
+ 
+  blocks = blocks + 1
+  end
+end
+ 
+function yFourLoop()
+blocks = 0
+ 
+  while layers ~= 0 do
+    bMined = turtle.getItemCount(3) + turtle.getItemCount(4) + turtle.getItemCount(5) + turtle.getItemCount(6) + turtle.getItemCount(7) + turtle.getItemCount(8) + turtle.getItemCount(9) + turtle.getItemCount(10) + turtle.getItemCount(11) + turtle.getItemCount(12) + turtle.getItemCount(13) + turtle.getItemCount(14) + turtle.getItemCount(15) + turtle.getItemCount(16)
+    fFuel = turtle.getFuelLevel()
+    term.clear()
+    term.setCursorPos(1,1)
+    term.write("MINING IN PROGRESS...")
+    print("")
+    print("Fuel Left: "..fFuel)
+    print("Blocks Mined: "..blocks)
+    print("Total Items: "..bMined)
+    print("Layers left: "..layers)
+ 
+  if fFuel <= 20 then
+    turtle.select(1)
+    turtle.refuel(1)
+  end
+ 
+  if cMode == 1 then
+    returnChestY()
+  end
+ 
+  turtle.digDown()
+  turtle.down()
+  detect()
+  turtle.forward()
+  detect()
+  turtle.forward()
+  detect()
+  turtle.forward()
+ 
+  turtle.turnRight()
+  detect()
+  turtle.forward()
+  turtle.turnRight()
+ 
+  detect()
+  turtle.forward()
+  detect()
+  turtle.forward()
+  detect()
+  turtle.forward()
+ 
+  turtle.turnLeft()
+  detect()
+  turtle.forward()
+  turtle.turnLeft()
+ 
+  detect()
+  turtle.forward()
+  detect()
+  turtle.forward()
+  detect()
+  turtle.forward()
+ 
+  turtle.turnRight()
+  detect()
+  turtle.forward()
+  turtle.turnRight()
+ 
+  detect()
+  turtle.forward()
+  detect()
+  turtle.forward()
+  detect()
+ 
+  turtle.turnRight()
+  turtle.forward()
+ 
+  if torchP == 10 then
+    turtle.turnLeft()
+    turtle.select(2)
+    turtle.place()
+    turtle.turnRight()
+ 
+    torchP = 0
+  end
+ 
+  turtle.forward()
+  turtle.turnLeft()
+  turtle.select(4)
+  turtle.place()
+  turtle.select(3)
+  turtle.turnRight()
+  turtle.forward()
+  turtle.turnLeft()
+  turtle.forward()
+  turtle.turnRight()
+  turtle.turnRight()
+ 
+  layers = layers - 1
+  torchP = torchP + 1
+  backT = backT + 1
+ 
+   end
+end
+ 
+function returnChestY()
+  if turtle.getItemCount(3) and turtle.getItemCount(4) and turtle.getItemCount(5) and turtle.getItemCount(6) and turtle.getItemCount(7) and turtle.getItemCount(8) and turtle.getItemCount(9) and turtle.getItemCount(10) and turtle.getItemCount(11) and turtle.getItemCount(12) and turtle.getItemCount(13) and turtle.getItemCount(14) and turtle.getItemCount(15) and turtle.getItemCount(16) >= 1 then
+ 
+    if fFuel <= backT * 2 then
+          turtle.select(1)
+      turtle.refuel(10)
+    end
+       
+  bTrack = backT
+ 
+  while bTrack ~= 0 do
+    bTrack = bTrack - 1
+    turtle.up()
+  end
+ 
+  turtle.turnLeft()
+ 
+  turtle.select(3)
+  turtle.drop(64)
+ 
+  for i = 5, 16 do
+    turtle.select(i)
+    turtle.drop(64)          
+  end
+ 
+  turtle.select(3)
+ 
+  turtle.turnRight()
+  bTrack = backT
+ 
+  while bTrack ~= 0 do
+    bTrack = bTrack - 1
+    turtle.down()
+  end    
+   
+   end
+end
+ 
+function returnChest()
+  if turtle.getItemCount(3) and turtle.getItemCount(4) and turtle.getItemCount(5) and turtle.getItemCount(6) and turtle.getItemCount(7) and turtle.getItemCount(8) and turtle.getItemCount(9) and turtle.getItemCount(10) and turtle.getItemCount(11) and turtle.getItemCount(12) and turtle.getItemCount(13) and turtle.getItemCount(14) and turtle.getItemCount(15) and turtle.getItemCount(16) >= 1 then
+ 
+    if fFuel <= backT * 2 then
+      turtle.select(1)
+      turtle.refuel(10)
+    end
+   
+    turtle.select(3)
+   
+    bTrack = backT
+    turtle.turnLeft()
+    turtle.turnLeft()
+    turtle.up()
+ 
+      while bTrack ~= 0 do
+        bTrack = bTrack - 1
+        turtle.forward()
+      end
+ 
+    turtle.turnRight()
+    turtle.down()
+ 
+    for i = 3, 16 do
+      turtle.select(i)
+      turtle.drop(64)
+    end
+ 
+      turtle.select(3)
+    turtle.turnRight()
+    turtle.up()
+ 
+      while bTrack ~= backT do
+        bTrack = bTrack + 1
+        turtle.forward()
+      end
+    turtle.down()
+  end
+end
+ 
+function cMode()
+  chestIn = io.read()
+ 
+  if chestIn == "y" then
+    cMode = 1
+    step2()
+ 
+  elseif chestIn == "n" then
+    cMode = 0
+    step2()
+ 
+  else
+  stepChest()
+ 
+  end
+end
+ 
+function stepChest()
+  term.clear()
+  term.setCursorPos(1,1)
+  term.write("( y/n - if yes then put a double chest")
+  print("")
+  print("to the left of the turtle's start pos.)")
+  print("")
+  print("DO YOU WANT TURTLE TO RETURN TO CHEST WHEN FULL?")
+ 
+  cMode()
+end
+ 
+function step1()
+  term.clear()
+  term.setCursorPos(1,1)
+  term.write("(Type 1x2, 2x2, 3x3, y4x4, and exit)")
+  print("")
+  print("SELECT MODE:")
+ 
+  mode()
+ 
+end
+ 
+ 
+function mode()
+  modein = io.read()
+ 
+  if modein == "exit" then
+  os.reboot()
+ 
+  elseif modein == "1x2" then
+  mode = 2
+  stepChest()
+ 
+  elseif modein == "2x2" then
+  mode = 4
+  stepChest()
+ 
+  elseif modein == "3x3" then
+  mode = 9
+  stepChest()
+ 
+  elseif modein == "y4x4" then
+  mode = 16
+  stepChest()
+ 
+  else
+  step1()
+ 
+  end
+end
+ 
+function step2()
+  term.clear()
+  term.setCursorPos(1,1)
+  term.write("Turtle should be in the correct pos.")
+  print("")
+  print("@ = turtle, X = block")
+  print("")
+  print("X   XX   XXX  XXXX")
+  print("@   @X   XXX  XXXX")
+  print("         X@X  @XXX")
+  print("")
+  print("(Only numbers please 1+)")
+  print("")
+  print("MINE HOW MANY LAYERS:")
+  layers = io.read()
+ 
+  step3()
+ 
+end
+ 
+function step3()
+ 
+torch = tonumber(layers) / 11
+totalB = tonumber(layers) * mode
+fuelLevel = turtle.getFuelLevel()
+ 
+  term.clear()
+  term.setCursorPos(1,1)
+  term.write("Torches needed: "..torch)
+  print("")
+  print("Current fuel: "..fuelLevel)
+  print("ChestReturn: "..cMode)
+  print("Expected blocks to be mined: "..totalB)
+  if totalB > 896 then
+    print("!Warn. blocks mined > turtle inv. space!")
+  end
+  print("Layers: "..layers)
+  print("mode: "..mode)
+  print("")
+  print("Make sure coal is in the first slot, torches in the second, and ladders in the fourth!")
+  print("")
+  print("TYPE ANYTHING TO START MINING:")
+ 
+anyth = io.read()
+ 
+step4()
+end
+ 
+function step4()
+  if mode == 2 then
+  oneLoop()
+ 
+  elseif mode == 4 then
+  twoLoop()
+ 
+  elseif mode == 9 then
+  threeLoop()
+ 
+  elseif mode == 16 then
+  yFourLoop()
+ 
+  else
+ 
+  end
+end
+ 
+function oneLoop()
+blocks = 0
+ 
+  while layers ~= 0 do
+    bMined = turtle.getItemCount(3) + turtle.getItemCount(4) + turtle.getItemCount(5) + turtle.getItemCount(6) + turtle.getItemCount(7) + turtle.getItemCount(8) + turtle.getItemCount(9) + turtle.getItemCount(10) + turtle.getItemCount(11) + turtle.getItemCount(12) + turtle.getItemCount(13) + turtle.getItemCount(14) + turtle.getItemCount(15) + turtle.getItemCount(16)
+    fFuel = turtle.getFuelLevel()
+    term.clear()
+    term.setCursorPos(1,1)
+    term.write("MINING IN PROGRESS...")
+    print("")
+    print("Fuel Left: "..fFuel)
+    print("Blocks Mined: "..blocks)
+    print("Total Items: "..bMined)
+    print("Layers left: "..layers)
+ 
+  if fFuel <= 1 then
+    turtle.select(1)
+    turtle.refuel(1)
+  end
+ 
+  if cMode == 1 then
+    returnChest()
+  end
+ 
+ 
+    while turtle.detect() == true do
+      turtle.dig()
+      blocks = blocks + 1
+      os.sleep(0.4)
+    end
+ 
+  turtle.forward()
+ 
+    while turtle.detectUp() == true do
+      turtle.digUp()
+      blocks = blocks + 1
+      sleep(0.4)
+    end
+ 
+  if turtle.detectDown() == false then
+    turtle.select(3)
+    turtle.placeDown()
+  end
+ 
+  if torchP == 10 then
+    turtle.turnLeft()
+    turtle.turnLeft()
+    turtle.select(2)
+    turtle.place()
+    turtle.turnLeft()
+    turtle.turnLeft()
+    torchP = 0
+  end
+ 
+  layers = layers - 1
+  torchP = torchP + 1
+  backT = backT + 1
+ 
+  end
+end
+ 
+function twoLoop()
+blocks = 0
+ 
+  while layers ~= 0 do
+    bMined = turtle.getItemCount(3) + turtle.getItemCount(4) + turtle.getItemCount(5) + turtle.getItemCount(6) + turtle.getItemCount(7) + turtle.getItemCount(8) + turtle.getItemCount(9) + turtle.getItemCount(10) + turtle.getItemCount(11) + turtle.getItemCount(12) + turtle.getItemCount(13) + turtle.getItemCount(14) + turtle.getItemCount(15) + turtle.getItemCount(16)
+    fFuel = turtle.getFuelLevel()
+    term.clear()
+    term.setCursorPos(1,1)
+    term.write("MINING IN PROGRESS...")
+    print("")
+    print("Fuel Left: "..fFuel)
+    print("Blocks Mined: "..blocks)
+    print("Total Items: "..bMined)
+    print("Layers left: "..layers)
+ 
+  if fFuel <= 3 then
+    turtle.select(1)
+    turtle.refuel(1)
+  end
+ 
+  if cMode == 1 then
+    returnChest()
+  end
+ 
+  while turtle.detect() == true do
+    turtle.dig()
+    blocks = blocks + 1
+    sleep(0.4)
+  end
+ 
+  turtle.forward()
+ 
+  while turtle.detectUp() == true do
+    turtle.digUp()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.up()
+  turtle.turnRight()
+ 
+  while turtle.detect() == true do
+    turtle.dig()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.down()
+ 
+  while turtle.detect() == true do
+    turtle.dig()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.turnLeft()
+ 
+  if turtle.detectDown() == false then
+    turtle.select(3)
+    turtle.placeDown()
+  end
+ 
+  if torchP == 10 then
+    turtle.turnLeft()
+    turtle.turnLeft()
+    turtle.select(2)
+    turtle.place()
+    turtle.turnLeft()
+    turtle.turnLeft()
+    torchP = 0
+  end
+ 
+  layers = layers - 1
+  torchP = torchP + 1
+  backT = backT + 1
+ 
+  end
+end
+ 
+function threeLoop()
+blocks = 0
+ 
+  while layers ~= 0 do
+    bMined = turtle.getItemCount(3) + turtle.getItemCount(4) + turtle.getItemCount(5) + turtle.getItemCount(6) + turtle.getItemCount(7) + turtle.getItemCount(8) + turtle.getItemCount(9) + turtle.getItemCount(10) + turtle.getItemCount(11) + turtle.getItemCount(12) + turtle.getItemCount(13) + turtle.getItemCount(14) + turtle.getItemCount(15) + turtle.getItemCount(16)
+    fFuel = turtle.getFuelLevel()
+    term.clear()
+    term.setCursorPos(1,1)
+    term.write("MINING IN PROGRESS...")
+    print("")
+    print("Fuel Left: "..fFuel)
+    print("Blocks Mined: "..blocks)
+    print("Total Items: "..bMined)
+    print("Layers left: "..layers)
+ 
+  if fFuel <= 6 then
+    turtle.select(1)
+    turtle.refuel(1)
+  end
+ 
+  if cMode == 1 then
+    returnChest()
+  end
+ 
+  while turtle.detect() == true do
+    turtle.dig()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.forward()
+ 
+  while turtle.detectUp() == true do
+    turtle.digUp()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.up()
+ 
+  while turtle.detectUp() == true do
+    turtle.digUp()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.up()
+  turtle.turnRight()
+ 
+  while turtle.detect() == true do
+    turtle.dig()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.turnLeft()
+  turtle.turnLeft()
+ 
+  while turtle.detect() == true do
+    turtle.dig()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.down()
+ 
+  while turtle.detect() == true do
+    turtle.dig()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.turnRight()
+  turtle.turnRight()
+ 
+  while turtle.detect() == true do
+    turtle.dig()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.down()
+ 
+  while turtle.detect() == true do
+    turtle.dig()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.turnLeft()
+  turtle.turnLeft()
+ 
+  while turtle.detect() == true do
+    turtle.dig()
+    blocks = blocks + 1
+    os.sleep(0.4)
+  end
+ 
+  turtle.turnRight()
+ 
+  if turtle.detectDown() == false then
+    turtle.select(3)
+    turtle.placeDown()
+  end
+ 
+  if torchP == 10 then
+    turtle.turnLeft()
+    turtle.turnLeft()
+    turtle.select(2)
+    turtle.place()
+    turtle.turnLeft()
+    turtle.turnLeft()
+    torchP = 0
+  end
+ 
+  layers = layers - 1
+  torchP = torchP + 1
+  backT = backT + 1
+ 
+  end
+end
+ 
+step1()
