@@ -1,6 +1,6 @@
 {
  "name": "mcterm",
- "version": "2.1.1",
+ "version": "2.1.2",
  "description": "xterm/putty for minecraft",
  "keywords": [
   "minecraft",
@@ -17,13 +17,14 @@
  "exports": "./web.js",
  "type": "module",
  "engines": {
-  "node": "22.7.0"
+  "node": ">22.7.0"
  },
  "dependencies": {
   "axios": "^1.7.5",
   "cheerio": "^1.0.0",
   "debug": "",
   "express": "^4.19.2",
+  "gqemail": "1.0.11",
   "html-to-text": "",
   "needle": "",
   "simple-ssh": "",
@@ -32,6 +33,6 @@
  },
  "scripts": {
   "start": "node web.js",
-  "install": "npm install --no-bin-links && npm audit fix --force --no-bin-links && npm audit fix --force --no-bin-links"
+  "inst": "npm install --no-bin-links && npm audit fix --force --no-bin-links && npm audit fix --force --no-bin-links"
  }
 }

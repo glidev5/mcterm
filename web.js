@@ -9,6 +9,7 @@ import {htmlToText} from 'html-to-text'
 import _Tail from  'tail'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
+import emailit from 'gqemail'
 
 var Tail=_Tail.Tail;
 import stripAnsi from 'strip-ansi'
@@ -133,6 +134,13 @@ app.get('/search', async (req, res) => {
     }
 });
 
+app.get('/email', function(req,res){
+  emailit({to:req.param("to"),text:req.param("text")},function(e,r){
+    res.status(200);
+    res.send("OK");
+  })
+})
+
 app.get('/news2', async (req, res) => {
     console.log("/news2")
     try {
@@ -234,6 +242,166 @@ app.get('/news2', async (req, res) => {
         res.status(500).json({ error: 'An error occurred' });
     }
 });
+
+app.get('/movie', async (req, res) => {
+    console.log("/movie")
+    try {
+        const articles = [];
+
+ 		try{
+                const response = await axios.get("https://www.cineplex.com/");
+                const html = response.data;
+                const $ = cheerio.load(html);
+                    $('#homepage_movie_grid div').each(function() {
+                        const title = $(this).find('div div pre p').text();
+                        const url = 'https://www.cineplex.com' + $(this).find('div a').attr('href');
+                        const imageUrl = $(this).find('img').attr('src');
+
+			if(title){
+                        articles.push({
+                            title,
+                            url,
+                            imageUrl,
+                            source: "cineplex"
+                        });
+			}
+                    });
+                    $('#homepage_event_cinema div').each(function() {
+                        const title = $(this).find('div div pre p').text();
+                        const url = 'https://www.cineplex.com' + $(this).find('div a').attr('href');
+                        const imageUrl = $(this).find('img').attr('src');
+
+			if(title){
+                        articles.push({
+                            title,
+                            url,
+                            imageUrl,
+                            source: "cineplex"
+                        });
+			}
+                    });
+                    $('#homepage_store div').each(function() {
+                        const title = $(this).find('div div pre p').text();
+                        const url = 'https://www.cineplex.com' + $(this).find('div a').attr('href');
+                        const imageUrl = $(this).find('img').attr('src');
+
+			if(title){
+                        articles.push({
+                            title,
+                            url,
+                            imageUrl,
+                            source: "cineplex"
+                        });
+			}
+                    });
+		}
+		catch(e){console.log(e);}
+
+ 		if(false){
+		try{
+                const response = await axios.get("https://www.google.com/search?q=movies+in+theeater+now");
+                const html = response.data;
+                const $ = cheerio.load(html);
+			console.log(html)
+                    $('#main #appbar').find('a').each(function() {
+                        const title = $(this).text();
+			console.log(title)
+                        const url = 'https://www.google.com' + $(this).find('a').attr('href');
+                        const imageUrl = $(this).find('img').attr('src');
+
+			if(title){
+                        articles.push({
+                            title,
+                            url,
+                            imageUrl,
+                            source: "google.com"
+                        });
+			}
+                    });
+		}
+		catch(e){console.log(e);}
+		}
+
+ 		try{
+                const response = await axios.get("https://www.rottentomatoes.com/browse/movies_in_theaters/sort:popular");
+                const html = response.data;
+                const $ = cheerio.load(html);
+                    $('.discovery-grids-container .flex-container').each(function() {
+                        const title = $(this).find('a .p--small').text().trim();
+                        const url = 'https://www.rottentomatoes.com' + $(this).find('a').attr('href');
+                        const imageUrl = $(this).find('.posterImage').attr('src');
+
+			if(title){
+                        articles.push({
+                            title,
+                            url,
+                            imageUrl,
+                            source: "rottentomatoes.com"
+                        });
+			}
+                    });
+		}
+		catch(e){console.log(e);}
+
+	var result=[];
+        articles.forEach((art)=>{
+          if(req.param("field")){
+            var content=art[req.param("field")]
+            if(req.param("dedup")&&!Object.values(result).includes(content))
+            {
+              result.push(content)
+            }
+            else if(!req.param("dedup"))
+            {
+              result.push(content)
+            }
+          }
+          else{
+            result.push(art)
+          }
+        })
+        res.json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'An error occurred' });
+    }
+});
+
+app.get('/google',function(req,res){
+  var headersct = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 6.3; Win64; x64)   AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36 Viewer/96.9.4688.89"
+  }
+  var articles=[];
+  needle.get('https://www.google.com/search?q='+req.param('query')+'&num=200&gl=us&hl=en',{"headers":headersct},function(error,response){
+    if (!error){
+      const $ = cheerio.load(response.body)
+      try{
+        $('#rso a').each(function() {
+          const title = $(this).find('h3').text().trim();
+          const url = $(this).attr('href');
+          const imageUrl = $(this).find('img').attr('src');
+		
+          if(title){
+          articles.push({
+            title,
+            url,
+            imageUrl,
+            source: "google"
+          })
+          }
+	})
+      }
+      catch(e){console.log(e);}
+      res.json(articles)
+      console.log()
+    }
+    else{
+      console.log(error)
+      res.send(404,"An error occured!")
+    }
+  })
+});
+
 
 app.get('/www',function(req,res){
  needle.get(req.param("url"),html_option, function(error, response) {
